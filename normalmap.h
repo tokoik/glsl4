@@ -1,4 +1,4 @@
 /*
-** Ë¡Àş¥Ş¥Ã¥×¤ÎºîÀ®
+** –@üƒ}ƒbƒv‚Ìì¬
 */
 extern void makeNormalMap(void *data, int width, int height, double max, const char *name);

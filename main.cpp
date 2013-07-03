@@ -15,14 +15,14 @@
 #endif
 
 /*
-** ¸÷¸»
+** ŒõŒ¹
 */
-static const GLfloat lightpos[] = { 4.0, 5.0, 6.0, 1.0 }; /* °ÌÃÖ¡¡¡¡¡¡ */
-static const GLfloat lightcol[] = { 1.0, 1.0, 1.0, 1.0 }; /* Ä¾ÀÜ¸÷¶¯ÅÙ */
-static const GLfloat lightamb[] = { 0.1, 0.1, 0.1, 1.0 }; /* ´Ä¶­¸÷¶¯ÅÙ */
+static const GLfloat lightpos[] = { 4.0, 5.0, 6.0, 1.0 }; /* ˆÊ’u@@@ */
+static const GLfloat lightcol[] = { 1.0, 1.0, 1.0, 1.0 }; /* ’¼ÚŒõ‹­“x */
+static const GLfloat lightamb[] = { 0.1, 0.1, 0.1, 1.0 }; /* ŠÂ‹«Œõ‹­“x */
 
 /*
-** ¥·¥§¡¼¥À
+** ƒVƒF[ƒ_
 */
 #include "glsl.h"
 static GLuint vertShader;
@@ -30,40 +30,40 @@ static GLuint fragShader;
 static GLuint gl2Program;
 
 /*
-** ¥Æ¥¯¥¹¥Á¥ã
+** ƒeƒNƒXƒ`ƒƒ
 */
-#define TEXWIDTH  256                      /* ¥Æ¥¯¥¹¥Á¥ã¤ÎÉı¡¡¡¡¡¡ */
-#define TEXHEIGHT 256                      /* ¥Æ¥¯¥¹¥Á¥ã¤Î¹â¤µ¡¡¡¡ */
-static const char texture1[] = "dotbump.raw";  /* ¥Æ¥¯¥¹¥Á¥ã¥Õ¥¡¥¤¥ëÌ¾ */
+#define TEXWIDTH  256                      /* ƒeƒNƒXƒ`ƒƒ‚Ì•@@@ */
+#define TEXHEIGHT 256                      /* ƒeƒNƒXƒ`ƒƒ‚Ì‚‚³@@ */
+static const char texture1[] = "dotbump.raw";  /* ƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼ */
 
 /*
-** Ë¡Àş¥Ş¥Ã¥×¤òºîÀ®¤¹¤ë´Ø¿ô¤ÎÀë¸À
+** –@üƒ}ƒbƒv‚ğì¬‚·‚éŠÖ”‚ÌéŒ¾
 */
 #include "normalmap.h"
 
 /*
-** ÀÜ¥Ù¥¯¥È¥ë¤ò³ÊÇ¼¤¹¤ë attribute ÊÑ¿ô¤Î¥Ï¥ó¥É¥ë
+** ÚƒxƒNƒgƒ‹‚ğŠi”[‚·‚é attribute •Ï”‚Ìƒnƒ“ƒhƒ‹
 */
 GLint tangent;
 
 /*
-** ½é´ü²½
+** ‰Šú‰»
 */
 static void init(void)
 {
-  /* ¥·¥§¡¼¥À¥×¥í¥°¥é¥à¤Î¥³¥ó¥Ñ¥¤¥ë¡¿¥ê¥ó¥¯·ë²Ì¤òÆÀ¤ëÊÑ¿ô */
+  /* ƒVƒF[ƒ_ƒvƒƒOƒ‰ƒ€‚ÌƒRƒ“ƒpƒCƒ‹^ƒŠƒ“ƒNŒ‹‰Ê‚ğ“¾‚é•Ï” */
   GLint compiled, linked;
 
-  /* ¥Æ¥¯¥¹¥Á¥ã¤ÎÆÉ¤ß¹ş¤ß¤Ë»È¤¦ÇÛÎó */
+  /* ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ‚Ég‚¤”z—ñ */
   GLubyte texture[TEXHEIGHT][TEXWIDTH][4];
   GLuint tex;
 
-  /* ½é´üÀßÄê */
+  /* ‰Šúİ’è */
   glClearColor(0.3, 0.3, 1.0, 0.0);
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
 
-  /* ¸÷¸»¤Î½é´üÀßÄê */
+  /* ŒõŒ¹‚Ì‰Šúİ’è */
   glEnable(GL_LIGHTING);
   glEnable(GL_LIGHT0);
   glLightfv(GL_LIGHT0, GL_DIFFUSE, lightcol);
@@ -71,18 +71,18 @@ static void init(void)
   glLightfv(GL_LIGHT0, GL_AMBIENT, lightamb);
   glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
 
-  /* GLSL ¤Î½é´ü²½ */
+  /* GLSL ‚Ì‰Šú‰» */
   if (glslInit()) exit(1);
 
-  /* ¥·¥§¡¼¥À¥ª¥Ö¥¸¥§¥¯¥È¤ÎºîÀ® */
+  /* ƒVƒF[ƒ_ƒIƒuƒWƒFƒNƒg‚Ìì¬ */
   vertShader = glCreateShader(GL_VERTEX_SHADER);
   fragShader = glCreateShader(GL_FRAGMENT_SHADER);
 
-  /* ¥·¥§¡¼¥À¤Î¥½¡¼¥¹¥×¥í¥°¥é¥à¤ÎÆÉ¤ß¹ş¤ß */
+  /* ƒVƒF[ƒ_‚Ìƒ\[ƒXƒvƒƒOƒ‰ƒ€‚Ì“Ç‚İ‚İ */
   if (readShaderSource(vertShader, "bump.vert")) exit(1);
   if (readShaderSource(fragShader, "bump.frag")) exit(1);
 
-  /* ¥Ğ¡¼¥Æ¥Ã¥¯¥¹¥·¥§¡¼¥À¤Î¥½¡¼¥¹¥×¥í¥°¥é¥à¤Î¥³¥ó¥Ñ¥¤¥ë */
+  /* ƒo[ƒeƒbƒNƒXƒVƒF[ƒ_‚Ìƒ\[ƒXƒvƒƒOƒ‰ƒ€‚ÌƒRƒ“ƒpƒCƒ‹ */
   glCompileShader(vertShader);
   glGetShaderiv(vertShader, GL_COMPILE_STATUS, &compiled);
   printShaderInfoLog(vertShader);
@@ -91,7 +91,7 @@ static void init(void)
     exit(1);
   }
 
-  /* ¥Õ¥é¥°¥á¥ó¥È¥·¥§¡¼¥À¤Î¥½¡¼¥¹¥×¥í¥°¥é¥à¤Î¥³¥ó¥Ñ¥¤¥ë */
+  /* ƒtƒ‰ƒOƒƒ“ƒgƒVƒF[ƒ_‚Ìƒ\[ƒXƒvƒƒOƒ‰ƒ€‚ÌƒRƒ“ƒpƒCƒ‹ */
   glCompileShader(fragShader);
   glGetShaderiv(fragShader, GL_COMPILE_STATUS, &compiled);
   printShaderInfoLog(fragShader);
@@ -100,18 +100,18 @@ static void init(void)
     exit(1);
   }
 
-  /* ¥×¥í¥°¥é¥à¥ª¥Ö¥¸¥§¥¯¥È¤ÎºîÀ® */
+  /* ƒvƒƒOƒ‰ƒ€ƒIƒuƒWƒFƒNƒg‚Ìì¬ */
   gl2Program = glCreateProgram();
 
-  /* ¥·¥§¡¼¥À¥ª¥Ö¥¸¥§¥¯¥È¤Î¥·¥§¡¼¥À¥×¥í¥°¥é¥à¤Ø¤ÎÅĞÏ¿ */
+  /* ƒVƒF[ƒ_ƒIƒuƒWƒFƒNƒg‚ÌƒVƒF[ƒ_ƒvƒƒOƒ‰ƒ€‚Ö‚Ì“o˜^ */
   glAttachShader(gl2Program, vertShader);
   glAttachShader(gl2Program, fragShader);
 
-  /* ¥·¥§¡¼¥À¥ª¥Ö¥¸¥§¥¯¥È¤Îºï½ü */
+  /* ƒVƒF[ƒ_ƒIƒuƒWƒFƒNƒg‚Ìíœ */
   glDeleteShader(vertShader);
   glDeleteShader(fragShader);
 
-  /* ¥·¥§¡¼¥À¥×¥í¥°¥é¥à¤Î¥ê¥ó¥¯ */
+  /* ƒVƒF[ƒ_ƒvƒƒOƒ‰ƒ€‚ÌƒŠƒ“ƒN */
   glLinkProgram(gl2Program);
   glGetProgramiv(gl2Program, GL_LINK_STATUS, &linked);
   printProgramInfoLog(gl2Program);
@@ -120,115 +120,115 @@ static void init(void)
     exit(1);
   }
 
-  /* ¥·¥§¡¼¥À¥×¥í¥°¥é¥à¤ÎÅ¬ÍÑ */
+  /* ƒVƒF[ƒ_ƒvƒƒOƒ‰ƒ€‚Ì“K—p */
   glUseProgram(gl2Program);
 
-  /* ¥Æ¥¯¥¹¥Á¥ã¥æ¥Ë¥Ã¥È£°¤ò»ØÄê¤¹¤ë */
+  /* ƒeƒNƒXƒ`ƒƒƒ†ƒjƒbƒg‚O‚ğw’è‚·‚é */
   glUniform1i(glGetUniformLocation(gl2Program, "texture"), 0);
   glActiveTexture(GL_TEXTURE0);
 
-  /* ÀÜ¥Ù¥¯¥È¥ë¤òÅÏ¤¹¤¿¤á¤Ë»È¤¦ attribute ÊÑ¿ô¤Î¥Ï¥ó¥É¥ë¤òÆÀ¤ë */
+  /* ÚƒxƒNƒgƒ‹‚ğ“n‚·‚½‚ß‚Ég‚¤ attribute •Ï”‚Ìƒnƒ“ƒhƒ‹‚ğ“¾‚é */
   tangent = glGetAttribLocation(gl2Program, "tangent");
 
-  /* ¥Æ¥¯¥¹¥Á¥ã¥ª¥Ö¥¸¥§¥¯¥È¤ÎºîÀ®¤È·ë¹ç */
+  /* ƒeƒNƒXƒ`ƒƒƒIƒuƒWƒFƒNƒg‚Ìì¬‚ÆŒ‹‡ */
   glGenTextures(1, &tex);
   glBindTexture(GL_TEXTURE_2D, tex);
 
-  /* Ë¡Àş¥Ş¥Ã¥×¤ÎºîÀ® */
+  /* –@üƒ}ƒbƒv‚Ìì¬ */
   makeNormalMap(texture, TEXWIDTH, TEXHEIGHT, 20.0, texture1);
 
-  /* ¥Æ¥¯¥¹¥Á¥ã²èÁü¤Ï¥ï¡¼¥ÉÃ±°Ì¤ËµÍ¤á¹ş¤Ş¤ì¤Æ¤¤¤ë */
+  /* ƒeƒNƒXƒ`ƒƒ‰æ‘œ‚Íƒ[ƒh’PˆÊ‚É‹l‚ß‚Ü‚ê‚Ä‚¢‚é */
   glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 
-  /* ¥ß¥Ã¥×¥Ş¥Ã¥×¤ò¼«Æ°À¸À®¤¹¤ë */
+  /* ƒ~ƒbƒvƒ}ƒbƒv‚ğ©“®¶¬‚·‚é */
   glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
 
-  /* ¥Æ¥¯¥¹¥Á¥ã¤ò³ÈÂç¡¦½Ì¾®¤¹¤ëÊıË¡¤Î»ØÄê */
+  /* ƒeƒNƒXƒ`ƒƒ‚ğŠg‘åEk¬‚·‚é•û–@‚Ìw’è */
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-  /* ¥Æ¥¯¥¹¥Á¥ã¤Î·«¤êÊÖ¤·ÊıË¡¤Î»ØÄê */
+  /* ƒeƒNƒXƒ`ƒƒ‚ÌŒJ‚è•Ô‚µ•û–@‚Ìw’è */
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-  /* ¥Æ¥¯¥¹¥Á¥ã¤Î³ä¤êÅö¤Æ */
+  /* ƒeƒNƒXƒ`ƒƒ‚ÌŠ„‚è“–‚Ä */
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, TEXWIDTH, TEXHEIGHT, 0,
     GL_RGBA, GL_UNSIGNED_BYTE, texture);
 }
 
-/* µå¤òÉÁ¤¯´Ø¿ô¤ÎÀë¸À */
+/* ‹…‚ğ•`‚­ŠÖ”‚ÌéŒ¾ */
 #include "sphere.h"
 
 /*
-** ¥·¡¼¥ó¤ÎÉÁ²è
+** ƒV[ƒ“‚Ì•`‰æ
 */
 static void scene(void)
 {
   static const GLfloat diffuse[] = { 0.6f, 0.1f, 0.1f, 1.0f };
   static const GLfloat specular[] = { 0.3f, 0.3f, 0.3f, 1.0f };
 
-  /* ºà¼Á¤ÎÀßÄê */
+  /* Ş¿‚Ìİ’è */
   glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, diffuse);
   glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specular);
   glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 100.0f);
 
-  /* µå¤òÉÁ¤¯ */
+  /* ‹…‚ğ•`‚­ */
   sphere(1.0, 64, 32, tangent);
   
 }
 
 
 /****************************
-** GLUT ¤Î¥³¡¼¥ë¥Ğ¥Ã¥¯´Ø¿ô **
+** GLUT ‚ÌƒR[ƒ‹ƒoƒbƒNŠÖ” **
 ****************************/
 
-/* ¥È¥é¥Ã¥¯¥Ü¡¼¥ë½èÍıÍÑ´Ø¿ô¤ÎÀë¸À */
+/* ƒgƒ‰ƒbƒNƒ{[ƒ‹ˆ——pŠÖ”‚ÌéŒ¾ */
 #include "trackball.h"
 
 static void display(void)
 {
-  /* ¥â¥Ç¥ë¥Ó¥å¡¼ÊÑ´¹¹ÔÎó¤Î½é´ü²½ */
+  /* ƒ‚ƒfƒ‹ƒrƒ…[•ÏŠ·s—ñ‚Ì‰Šú‰» */
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
-  /* ²èÌÌ¥¯¥ê¥¢ */
+  /* ‰æ–ÊƒNƒŠƒA */
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  /* ¸÷¸»¤Î°ÌÃÖ¤òÀßÄê */
+  /* ŒõŒ¹‚ÌˆÊ’u‚ğİ’è */
   glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
 
-  /* »ëÅÀ¤Î°ÜÆ°¡ÊÊªÂÎ¤ÎÊı¤ò±ü¤Ë°ÜÆ°¡Ë*/
+  /* ‹“_‚ÌˆÚ“®i•¨‘Ì‚Ì•û‚ğ‰œ‚ÉˆÚ“®j*/
   glTranslated(0.0, 0.0, -5.0);
 
-  /* ¥È¥é¥Ã¥¯¥Ü¡¼¥ë½èÍı¤Ë¤è¤ë²óÅ¾ */
+  /* ƒgƒ‰ƒbƒNƒ{[ƒ‹ˆ—‚É‚æ‚é‰ñ“] */
   glMultMatrixd(trackballRotation());
 
-  /* ¥·¡¼¥ó¤ÎÉÁ²è */
+  /* ƒV[ƒ“‚Ì•`‰æ */
   scene();
 
-  /* ¥À¥Ö¥ë¥Ğ¥Ã¥Õ¥¡¥ê¥ó¥° */
+  /* ƒ_ƒuƒ‹ƒoƒbƒtƒ@ƒŠƒ“ƒO */
   glutSwapBuffers();
 }
 
 static void resize(int w, int h)
 {
-  /* ¥È¥é¥Ã¥¯¥Ü¡¼¥ë¤¹¤ëÈÏ°Ï */
+  /* ƒgƒ‰ƒbƒNƒ{[ƒ‹‚·‚é”ÍˆÍ */
   trackballRegion(w, h);
 
-  /* ¥¦¥£¥ó¥É¥¦Á´ÂÎ¤ò¥Ó¥å¡¼¥İ¡¼¥È¤Ë¤¹¤ë */
+  /* ƒEƒBƒ“ƒhƒE‘S‘Ì‚ğƒrƒ…[ƒ|[ƒg‚É‚·‚é */
   glViewport(0, 0, w, h);
 
-  /* Æ©»ëÊÑ´¹¹ÔÎó¤Î»ØÄê */
+  /* “§‹•ÏŠ·s—ñ‚Ìw’è */
   glMatrixMode(GL_PROJECTION);
 
-  /* Æ©»ëÊÑ´¹¹ÔÎó¤Î½é´ü²½ */
+  /* “§‹•ÏŠ·s—ñ‚Ì‰Šú‰» */
   glLoadIdentity();
   gluPerspective(40.0, (double)w / (double)h, 1.0, 100.0);
 }
 
 static void idle(void)
 {
-  /* ²èÌÌ¤ÎÉÁ¤­ÂØ¤¨ */
+  /* ‰æ–Ê‚Ì•`‚«‘Ö‚¦ */
   glutPostRedisplay();
 }
 
@@ -238,12 +238,12 @@ static void mouse(int button, int state, int x, int y)
   case GLUT_LEFT_BUTTON:
     switch (state) {
     case GLUT_DOWN:
-      /* ¥È¥é¥Ã¥¯¥Ü¡¼¥ë³«»Ï */
+      /* ƒgƒ‰ƒbƒNƒ{[ƒ‹ŠJn */
       trackballStart(x, y);
       glutIdleFunc(idle);
       break;
     case GLUT_UP:
-      /* ¥È¥é¥Ã¥¯¥Ü¡¼¥ëÄä»ß */
+      /* ƒgƒ‰ƒbƒNƒ{[ƒ‹’â~ */
       trackballStop(x, y);
       glutIdleFunc(0);
       break;
@@ -258,7 +258,7 @@ static void mouse(int button, int state, int x, int y)
 
 static void motion(int x, int y)
 {
-  /* ¥È¥é¥Ã¥¯¥Ü¡¼¥ë°ÜÆ° */
+  /* ƒgƒ‰ƒbƒNƒ{[ƒ‹ˆÚ“® */
   trackballMotion(x, y);
 }
 
@@ -268,7 +268,7 @@ static void keyboard(unsigned char key, int x, int y)
   case 'q':
   case 'Q':
   case '\033':
-    /* ESC ¤« q ¤« Q ¤ò¥¿¥¤¥×¤·¤¿¤é½ªÎ» */
+    /* ESC ‚© q ‚© Q ‚ğƒ^ƒCƒv‚µ‚½‚çI—¹ */
     exit(0);
   default:
     break;
@@ -276,7 +276,7 @@ static void keyboard(unsigned char key, int x, int y)
 }
 
 /*
-** ¥á¥¤¥ó¥×¥í¥°¥é¥à
+** ƒƒCƒ“ƒvƒƒOƒ‰ƒ€
 */
 int main(int argc, char *argv[])
 {

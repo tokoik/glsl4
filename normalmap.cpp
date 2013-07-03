@@ -12,7 +12,7 @@
 #include "normalmap.h"
 
 /*
-** ¹â¤µ¥Ş¥Ã¥×¤ò¤â¤È¤ËË¡Àş¥Ş¥Ã¥×¤òºîÀ®¤¹¤ë
+** ‚‚³ƒ}ƒbƒv‚ğ‚à‚Æ‚É–@üƒ}ƒbƒv‚ğì¬‚·‚é
 */
 void makeNormalMap(void *data, int width, int height, double nz, const char *name)
 {
@@ -25,16 +25,16 @@ void makeNormalMap(void *data, int width, int height, double nz, const char *nam
     if (map) {
       unsigned long size = width * height;
       
-      /* ¹â¤µ¥Ş¥Ã¥×¤òÆÉ¤ß¹ş¤à */
+      /* ‚‚³ƒ}ƒbƒv‚ğ“Ç‚İ‚Ş */
       fread(map, height, width, fp);
       fclose(fp);
       
       for (unsigned long y = 0; y < size; y += width) {
         for (int x = 0; x < width; ++x) {
-          /* ÎÙÀÜ¤¹¤ë²èÁÇ¤È¤ÎÃÍ¤Îº¹¤òË¡Àş¥Ù¥¯¥È¥ë¤ÎÀ®Ê¬¤ËÍÑ¤¤¤ë */
+          /* —×Ú‚·‚é‰æ‘f‚Æ‚Ì’l‚Ì·‚ğ–@üƒxƒNƒgƒ‹‚Ì¬•ª‚É—p‚¢‚é */
           double nx = map[y + x] - map[y + (x + 1) % width];
           double ny = map[y + x] - map[(y + width) % size + x];
-          /* Ë¡Àş¥Ù¥¯¥È¥ë¤ÎÄ¹¤µ¤òµá¤á¤Æ¤ª¤¯ */
+          /* –@üƒxƒNƒgƒ‹‚Ì’·‚³‚ğ‹‚ß‚Ä‚¨‚­ */
           double nl = sqrt(nx * nx + ny * ny + nz * nz);
           
           *(tex++) = (GLubyte)(nx * 127.5 / nl + 127.5);

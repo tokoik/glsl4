@@ -16,14 +16,14 @@
 #define PI 3.14159265358979323846
 
 /*
-** ¥í¡¼¥«¥ëºÂÉ¸·Ï¤«¤é n ¤òË¡Àş¥Ù¥¯¥È¥ë¤È¤¹¤ëÀÜ¥Ù¥¯¥È¥ë t ¤òµá¤á¤ë
+** ƒ[ƒJƒ‹À•WŒn‚©‚ç n ‚ğ–@üƒxƒNƒgƒ‹‚Æ‚·‚éÚƒxƒNƒgƒ‹ t ‚ğ‹‚ß‚é
 */
 static void setTangent(const double n[3], GLint tangent)
 {
   double l = n[0] * n[0] + n[2] * n[2];
   double t[3];
   
-  /* ÀÜ¥Ù¥¯¥È¥ë = (0, 1, 0) ¡ß n */
+  /* ÚƒxƒNƒgƒ‹ = (0, 1, 0) ~ n */
   if (l > 0) {
     double a = sqrt(l);
     
@@ -39,11 +39,11 @@ static void setTangent(const double n[3], GLint tangent)
 }
 
 /*
-** µå¤ÎÉÁ²è
+** ‹…‚Ì•`‰æ
 */
 void sphere(double radius, int slices, int stacks, GLint tangent)
 {
-  /* µå¤òÉÁ¤¯ */
+  /* ‹…‚ğ•`‚­ */
   for (int j = 0; j < stacks; ++j) {
     double t0 = (double)(j + 1) / (double)stacks;
     double t1 = (double)j / (double)stacks;
@@ -51,15 +51,15 @@ void sphere(double radius, int slices, int stacks, GLint tangent)
     double r1 = sin(PI * t1);
     double n[2][3], p[2][3];
     
-    /* Ë¡ÀşÃ±°Ì¥Ù¥¯¥È¥ë¤Î y À®Ê¬ */
+    /* –@ü’PˆÊƒxƒNƒgƒ‹‚Ì y ¬•ª */
     n[0][1] = -cos(PI * t0);
     n[1][1] = -cos(PI * t1);
     
-    /* ÄºÅÀ¤Î y ºÂÉ¸ÃÍ */
+    /* ’¸“_‚Ì y À•W’l */
     p[0][1] = radius * n[0][1];
     p[1][1] = radius * n[1][1];
     
-    /* Ë¡Àş¥Ş¥Ã¥×¤Î¥Æ¥¯¥¹¥Á¥ãºÂÉ¸¤Î»»½Ğ */
+    /* –@üƒ}ƒbƒv‚ÌƒeƒNƒXƒ`ƒƒÀ•W‚ÌZo */
     t0 *= 4.0;
     t1 *= 4.0;
     
@@ -68,43 +68,43 @@ void sphere(double radius, int slices, int stacks, GLint tangent)
       double s = (double)i / (double)slices;
       double a = -2.0 * PI * s;
       
-      /* Ë¡ÀşÃ±°Ì¥Ù¥¯¥È¥ë¤Î x, z À®Ê¬ */
+      /* –@ü’PˆÊƒxƒNƒgƒ‹‚Ì x, z ¬•ª */
       n[0][0] = r0 * cos(a);
       n[0][2] = r0 * sin(a);
       n[1][0] = r1 * cos(a);
       n[1][2] = r1 * sin(a);
       
-      /* ÄºÅÀ¤Î x, z ºÂÉ¸ÃÍ */
+      /* ’¸“_‚Ì x, z À•W’l */
       p[0][0] = radius * n[0][0];
       p[0][2] = radius * n[0][2];
       p[1][0] = radius * n[1][0];
       p[1][2] = radius * n[1][2];
       
-      /* Ë¡Àş¥Ş¥Ã¥×¤Î¥Æ¥¯¥¹¥Á¥ãºÂÉ¸¤Î»»½Ğ */
+      /* –@üƒ}ƒbƒv‚ÌƒeƒNƒXƒ`ƒƒÀ•W‚ÌZo */
       s *= 8.0;
 
-      /* Ë¡Àş¥Ş¥Ã¥×¤Î¥Æ¥¯¥¹¥Á¥ãºÂÉ¸¤òÀßÄê¤¹¤ë */
+      /* –@üƒ}ƒbƒv‚ÌƒeƒNƒXƒ`ƒƒÀ•W‚ğİ’è‚·‚é */
       glTexCoord2d(s, t0);
       
-      /* Ë¡Àş¥Ù¥¯¥È¥ë¤òÀßÄê¤¹¤ë */
+      /* –@üƒxƒNƒgƒ‹‚ğİ’è‚·‚é */
       glNormal3dv(n[0]);
 
-      /* ÀÜ¥Ù¥¯¥È¥ë¤òÀßÄê¤¹¤ë */
+      /* ÚƒxƒNƒgƒ‹‚ğİ’è‚·‚é */
       setTangent(n[0], tangent);
       
-      /* ÄºÅÀ°ÌÃÖ */
+      /* ’¸“_ˆÊ’u */
       glVertex3dv(p[0]);
       
-      /* Ë¡Àş¥Ş¥Ã¥×¤Î¥Æ¥¯¥¹¥Á¥ãºÂÉ¸¤òÀßÄê¤¹¤ë */
+      /* –@üƒ}ƒbƒv‚ÌƒeƒNƒXƒ`ƒƒÀ•W‚ğİ’è‚·‚é */
       glTexCoord2d(s, t1);
       
-      /* Ë¡Àş¥Ù¥¯¥È¥ë¤òÀßÄê¤¹¤ë */
+      /* –@üƒxƒNƒgƒ‹‚ğİ’è‚·‚é */
       glNormal3dv(n[1]);
 
-      /* ÀÜ¥Ù¥¯¥È¥ë¤òÀßÄê¤¹¤ë */
+      /* ÚƒxƒNƒgƒ‹‚ğİ’è‚·‚é */
       setTangent(n[1], tangent);
       
-      /* ÄºÅÀ°ÌÃÖ */
+      /* ’¸“_ˆÊ’u */
       glVertex3dv(p[1]);
     }
     glEnd();
