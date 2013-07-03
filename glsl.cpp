@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -111,16 +112,16 @@ PFNGLVERTEXATTRIBPOINTERPROC glVertexAttribPointer;
 #endif
 
 /*
-** GLSL ¤Î½é´ü²½
+** GLSL ‚Ì‰Šú‰»
 */
 int glslInit(void)
 {
   int error = 0;
-  
+
 #if defined(WIN32)
 #define PADDR(functype, funcname) \
   ((funcname = (functype) wglGetProcAddress( #funcname )) == 0)
-  
+
   error |= PADDR(PFNGLATTACHSHADERPROC, glAttachShader);
   error |= PADDR(PFNGLBINDATTRIBLOCATIONPROC, glBindAttribLocation);
   error |= PADDR(PFNGLBLENDEQUATIONSEPARATEPROC, glBlendEquationSeparate);
@@ -214,15 +215,15 @@ int glslInit(void)
   error |= PADDR(PFNGLVERTEXATTRIB4UIVPROC, glVertexAttrib4uiv);
   error |= PADDR(PFNGLVERTEXATTRIB4USVPROC, glVertexAttrib4usv);
   error |= PADDR(PFNGLVERTEXATTRIBPOINTERPROC, glVertexAttribPointer);
-  
+
   if (error) fprintf(stderr, "Could not obtain all of entry points.\n");
 #endif
-  
+
   return error;
 }
 
 /*
-** ¥·¥§¡¼¥À¡¼¤Î¥½¡¼¥¹¥×¥í¥°¥é¥à¤ò¥á¥â¥ê¤ËÆÉ¤ß¹þ¤à
+** ƒVƒF[ƒ_[‚Ìƒ\[ƒXƒvƒƒOƒ‰ƒ€‚ðƒƒ‚ƒŠ‚É“Ç‚Ýž‚Þ
 */
 int readShaderSource(GLuint shader, const char *file)
 {
@@ -230,58 +231,58 @@ int readShaderSource(GLuint shader, const char *file)
   const GLchar *source;
   GLsizei length;
   int ret;
-  
-  /* ¥Õ¥¡¥¤¥ë¤ò³«¤¯ */
+
+  /* ƒtƒ@ƒCƒ‹‚ðŠJ‚­ */
   fp = fopen(file, "rb");
   if (fp == NULL) {
     perror(file);
     return -1;
   }
-  
-  /* ¥Õ¥¡¥¤¥ë¤ÎËöÈø¤Ë°ÜÆ°¤·¸½ºß°ÌÃÖ¡Ê¤Ä¤Þ¤ê¥Õ¥¡¥¤¥ë¥µ¥¤¥º¡Ë¤òÆÀ¤ë */
+
+  /* ƒtƒ@ƒCƒ‹‚Ì––”ö‚ÉˆÚ“®‚µŒ»ÝˆÊ’ui‚Â‚Ü‚èƒtƒ@ƒCƒ‹ƒTƒCƒYj‚ð“¾‚é */
   fseek(fp, 0L, SEEK_END);
   length = ftell(fp);
-  
-  /* ¥Õ¥¡¥¤¥ë¥µ¥¤¥º¤Î¥á¥â¥ê¤ò³ÎÊÝ */
+
+  /* ƒtƒ@ƒCƒ‹ƒTƒCƒY‚Ìƒƒ‚ƒŠ‚ðŠm•Û */
   source = (GLchar *)malloc(length);
   if (source == NULL) {
     fprintf(stderr, "Could not allocate read buffer.\n");
     return -1;
   }
-  
-  /* ¥Õ¥¡¥¤¥ë¤òÀèÆ¬¤«¤éÆÉ¤ß¹þ¤à */
+
+  /* ƒtƒ@ƒCƒ‹‚ðæ“ª‚©‚ç“Ç‚Ýž‚Þ */
   fseek(fp, 0L, SEEK_SET);
   ret = fread((void *)source, 1, length, fp) != (size_t)length;
   fclose(fp);
-  
-  /* ¥·¥§¡¼¥À¤Î¥½¡¼¥¹¥×¥í¥°¥é¥à¤Î¥·¥§¡¼¥À¥ª¥Ö¥¸¥§¥¯¥È¤Ø¤ÎÆÉ¤ß¹þ¤ß */
+
+  /* ƒVƒF[ƒ_‚Ìƒ\[ƒXƒvƒƒOƒ‰ƒ€‚ÌƒVƒF[ƒ_ƒIƒuƒWƒFƒNƒg‚Ö‚Ì“Ç‚Ýž‚Ý */
   if (ret)
     fprintf(stderr, "Could not read file: %s.\n", file);
   else
     glShaderSource(shader, 1, &source, &length);
-  
-  /* ³ÎÊÝ¤·¤¿¥á¥â¥ê¤Î³«Êü */
+
+  /* Šm•Û‚µ‚½ƒƒ‚ƒŠ‚ÌŠJ•ú */
   free((void *)source);
-  
+
   return ret;
 }
 
 /*
-** ¥·¥§¡¼¥À¤Î¾ðÊó¤òÉ½¼¨¤¹¤ë
+** ƒVƒF[ƒ_‚Ìî•ñ‚ð•\Ž¦‚·‚é
 */
 void printShaderInfoLog(GLuint shader)
 {
   GLsizei bufSize;
-  
+
   glGetShaderiv(shader, GL_INFO_LOG_LENGTH , &bufSize);
-  
+
   if (bufSize > 1) {
     GLchar *infoLog;
-    
+
     infoLog = (GLchar *)malloc(bufSize);
     if (infoLog != NULL) {
       GLsizei length;
-      
+
       glGetShaderInfoLog(shader, bufSize, &length, infoLog);
       fprintf(stderr, "InfoLog:\n%s\n\n", infoLog);
       free(infoLog);
@@ -292,21 +293,21 @@ void printShaderInfoLog(GLuint shader)
 }
 
 /*
-** ¥×¥í¥°¥é¥à¤Î¾ðÊó¤òÉ½¼¨¤¹¤ë
+** ƒvƒƒOƒ‰ƒ€‚Ìî•ñ‚ð•\Ž¦‚·‚é
 */
 void printProgramInfoLog(GLuint program)
 {
   GLsizei bufSize;
-  
+
   glGetProgramiv(program, GL_INFO_LOG_LENGTH , &bufSize);
-  
+
   if (bufSize > 1) {
     GLchar *infoLog;
-    
+
     infoLog = (GLchar *)malloc(bufSize);
     if (infoLog != NULL) {
       GLsizei length;
-      
+
       glGetProgramInfoLog(program, bufSize, &length, infoLog);
       fprintf(stderr, "InfoLog:\n%s\n\n", infoLog);
       free(infoLog);

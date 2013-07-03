@@ -1,4 +1,4 @@
 /*
 ** µÂ§Œ…¡≤Ë
 */
-extern void sphere(double radius, int slices, int stacks);
+extern void sphere(double radius, int slices, int stacks, GLint tangent);

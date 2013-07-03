@@ -18,12 +18,10 @@
 /*
 ** ローカル座標系から n を法線ベクトルとする接ベクトル t を求める
 */
-static void setTangent(const double n[3])
+static void setTangent(const double n[3], GLint tangent)
 {
   double l = n[0] * n[0] + n[2] * n[2];
   double t[3];
-  /* 接ベクトルを格納する attribute 変数のハンドル */
-  extern GLint tangent;
   
   /* 接ベクトル = (0, 1, 0) × n */
   if (l > 0) {
@@ -43,7 +41,7 @@ static void setTangent(const double n[3])
 /*
 ** 球の描画
 */
-void sphere(double radius, int slices, int stacks)
+void sphere(double radius, int slices, int stacks, GLint tangent)
 {
   /* 球を描く */
   for (int j = 0; j < stacks; ++j) {
@@ -92,7 +90,7 @@ void sphere(double radius, int slices, int stacks)
       glNormal3dv(n[0]);
 
       /* 接ベクトルを設定する */
-      setTangent(n[0]);
+      setTangent(n[0], tangent);
       
       /* 頂点位置 */
       glVertex3dv(p[0]);
@@ -104,7 +102,7 @@ void sphere(double radius, int slices, int stacks)
       glNormal3dv(n[1]);
 
       /* 接ベクトルを設定する */
-      setTangent(n[1]);
+      setTangent(n[1], tangent);
       
       /* 頂点位置 */
       glVertex3dv(p[1]);

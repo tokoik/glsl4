@@ -14,8 +14,9 @@
 /*
 ** 高さマップをもとに法線マップを作成する
 */
-void makeNormalMap(GLubyte *tex, int width, int height, double nz, const char *name)
+void makeNormalMap(void *data, int width, int height, double nz, const char *name)
 {
+  GLubyte *tex = (GLubyte *)data;
   FILE *fp = fopen(name, "rb");
   
   if (fp) {

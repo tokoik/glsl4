@@ -1,5 +1,5 @@
 /*
-** ´Ê°×¥È¥é¥Ã¥¯¥Ü¡¼¥ë½èÍı
+** ŠÈˆÕƒgƒ‰ƒbƒNƒ{[ƒ‹ˆ—
 */
 extern void trackballInit(void);
 extern void trackballRegion(int w, int h);
