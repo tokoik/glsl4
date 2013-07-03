@@ -1,3 +1,5 @@
+#version 120
+
 // bump.vert
 
 attribute vec3 tangent;
@@ -7,30 +9,30 @@ varying vec3 view;
 
 void main()
 {
-  // »ëÀş¥Ù¥¯¥È¥ë¤È¸÷Àş¥Ù¥¯¥È¥ë¤òµá¤á¤ë
-  vec3 v = vec3(gl_ModelViewMatrix * gl_Vertex);
-  vec3 l = gl_LightSource[0].position.xyz - v;
-  
-  // Ë¡Àş¥Ù¥¯¥È¥ë¤ÈÀÜÀş¥Ù¥¯¥È¥ë¤«¤éÀÜ¶õ´Ö¤Ø¤ÎÊÑ´¹¹ÔÎó¤òµá¤á¤ë
+  // ˆÊ’uƒxƒNƒgƒ‹‚ÆŒõüƒxƒNƒgƒ‹‚ğ‹‚ß‚é
+  vec4 p = gl_ModelViewMatrix * gl_Vertex;
+  vec3 l = normalize(gl_LightSource[0].position.xyz * p.w - gl_LightSource[0].position.w * p.xyz);
+
+  // –@üƒxƒNƒgƒ‹‚ÆÚüƒxƒNƒgƒ‹‚©‚çÚ‹óŠÔ‚Ö‚Ì•ÏŠ·s—ñ‚ğ‹‚ß‚é
   vec3 n = normalize(gl_NormalMatrix * gl_Normal);
   vec3 t = normalize(gl_NormalMatrix * tangent);
   vec3 b = cross(n, t);
   
   vec3 temp;
   
-  // ÀÜ¶õ´Ö¤Ë¤ª¤±¤ë»ëÀş¥Ù¥¯¥È¥ë¤òµá¤á¤ë
-  temp.x = dot(v, t);
-  temp.y = dot(v, b);
-  temp.z = dot(v, n);
-  view = normalize(temp);
+  // Ú‹óŠÔ‚É‚¨‚¯‚é‹üƒxƒNƒgƒ‹‚ğ‹‚ß‚é
+  temp.x = dot(p.xyz, t);
+  temp.y = dot(p.xyz, b);
+  temp.z = dot(p.xyz, n);
+  view = -normalize(temp);
 
-  // ÀÜ¶õ´Ö¤Ë¤ª¤±¤ë¸÷Àş¥Ù¥¯¥È¥ë¤òµá¤á¤ë
+  // Ú‹óŠÔ‚É‚¨‚¯‚éŒõüƒxƒNƒgƒ‹‚ğ‹‚ß‚é
   temp.x = dot(l, t);
   temp.y = dot(l, b);
   temp.z = dot(l, n);
   light = normalize(temp);
 
-  // ¥Æ¥¯¥¹¥Á¥ãºÂÉ¸¤ÈÄºÅÀºÂÉ¸¤ò½ĞÎÏ¤¹¤ë
+  // ƒeƒNƒXƒ`ƒƒÀ•W‚Æ’¸“_À•W‚ğo—Í‚·‚é
   gl_TexCoord[0] = gl_MultiTexCoord0;
   gl_Position = ftransform();
 }
