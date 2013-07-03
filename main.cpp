@@ -17,9 +17,9 @@
 /*
 ** 光源
 */
-static const GLfloat lightpos[] = { 4.0, 5.0, 6.0, 1.0 }; /* 位置　　　 */
-static const GLfloat lightcol[] = { 1.0, 1.0, 1.0, 1.0 }; /* 直接光強度 */
-static const GLfloat lightamb[] = { 0.1, 0.1, 0.1, 1.0 }; /* 環境光強度 */
+static const GLfloat lightpos[] = { 4.0f, 5.0f, 6.0f, 1.0f }; /* 位置　　　 */
+static const GLfloat lightcol[] = { 1.0f, 1.0f, 1.0f, 1.0f }; /* 直接光強度 */
+static const GLfloat lightamb[] = { 0.1f, 0.1f, 0.1f, 1.0f }; /* 環境光強度 */
 
 /*
 ** シェーダ
@@ -59,7 +59,7 @@ static void init(void)
   GLuint tex;
 
   /* 初期設定 */
-  glClearColor(0.3, 0.3, 1.0, 0.0);
+  glClearColor(0.3f, 0.3f, 1.0f, 0.0f);
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
 
