@@ -79,8 +79,8 @@ static void init(void)
   fragShader = glCreateShader(GL_FRAGMENT_SHADER);
 
   /* シェーダのソースプログラムの読み込み */
-  if (readShaderSource(vertShader, "bump.vert")) exit(1);
-  if (readShaderSource(fragShader, "bump.frag")) exit(1);
+  if (readShaderSource(vertShader, "texture.vert")) exit(1);
+  if (readShaderSource(fragShader, "texture.frag")) exit(1);
 
   /* バーテックスシェーダのソースプログラムのコンパイル */
   glCompileShader(vertShader);

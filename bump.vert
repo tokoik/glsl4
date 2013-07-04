@@ -11,7 +11,7 @@ void main()
 {
   // 位置ベクトルと光線ベクトルを求める
   vec4 p = gl_ModelViewMatrix * gl_Vertex;
-  vec3 l = normalize(gl_LightSource[0].position.xyz * p.w - gl_LightSource[0].position.w * p.xyz);
+  vec3 l = normalize((gl_LightSource[0].position * p.w - gl_LightSource[0].position.w * p).xyz);
 
   // 法線ベクトルと接線ベクトルから接空間への変換行列を求める
   vec3 n = normalize(gl_NormalMatrix * gl_Normal);
