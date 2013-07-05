@@ -76,6 +76,8 @@
   <ItemGroup>
     <None Include="bump.frag" />
     <None Include="bump.vert" />
+    <None Include="texture.frag" />
+    <None Include="texture.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glsl.cpp" />
