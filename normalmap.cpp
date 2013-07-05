@@ -47,5 +47,11 @@ void makeNormalMap(void *data, int width, int height, double nz, const char *nam
       
       free(map);
     }
+    else {
+      fprintf(stderr, "Can't allocate memory\n");
+    }
+  }
+  else {
+    fprintf(stderr, "Can't open file: %s\n", name);
   }
 }
