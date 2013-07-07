@@ -44,7 +44,7 @@ static const char texture1[] = "dotbump.raw";  /* テクスチャファイル名 */
 /*
 ** 接ベクトルを格納する attribute 変数のハンドル
 */
-GLint tangent;
+static GLint tangent;
 
 /*
 ** 初期化
@@ -123,12 +123,12 @@ static void init(void)
   /* シェーダプログラムの適用 */
   glUseProgram(gl2Program);
 
+  /* 接ベクトルを渡すために使う attribute 変数のハンドルを得る */
+  tangent = glGetAttribLocation(gl2Program, "tangent");
+
   /* テクスチャユニット０を指定する */
   glUniform1i(glGetUniformLocation(gl2Program, "texture"), 0);
   glActiveTexture(GL_TEXTURE0);
-
-  /* 接ベクトルを渡すために使う attribute 変数のハンドルを得る */
-  tangent = glGetAttribLocation(gl2Program, "tangent");
 
   /* テクスチャオブジェクトの作成と結合 */
   glGenTextures(1, &tex);
@@ -174,7 +174,6 @@ static void scene(void)
 
   /* 球を描く */
   sphere(1.0, 64, 32, tangent);
-  
 }
 
 
