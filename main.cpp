@@ -24,9 +24,6 @@
 /* トラックボール処理用関数の宣言 */
 #include "trackball.h"
 
-/* 1 ならティーポットを描く */
-#define DRAW_TEAPOT 0
-
 /*
 ** 光源
 */
@@ -198,7 +195,7 @@ static void display()
   glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
 
   /* 視点の移動（物体の方を奥に移動）*/
-  glTranslated(0.0, 0.0, -5.0);
+  glTranslated(0.0, 0.0, -3.0);
 
   /* トラックボール処理で図形を回転 */
   glMultMatrixd(trackballRotation());
