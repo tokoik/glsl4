@@ -1,4 +1,10 @@
+ï»¿#pragma once
+#define SPHERE_H
+
+/* OpenGL / GLSL */
+#include "glsl.h"
+
 /*
-** ‹…‚Ì•`‰æ
+** çƒã®æç”»
 */
 extern void sphere(double radius, int slices, int stacks, GLint tangent);

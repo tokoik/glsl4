@@ -7,18 +7,29 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # ソースファイル
 set(SOURCES
     main.cpp
-    scene.cpp
+    glsl.cpp
+    sphere.cpp
+    normalmap.cpp
     trackball.cpp
 )
 
 # ヘッダファイル
 set(HEADERS
-    scene.h
+    glsl.h
+    sphere.h
+    normalmap.h
     trackball.h
 )
 
 # リソースファイル
 set(RESOURCE_FILES
+    texture.vert
+    texture.frag
+    bump.vert
+    bump.frag
+    bump_a.raw
+    bump_b.raw
+    dotbump.raw
 )
 
 if(APPLE)
