@@ -7,7 +7,7 @@ uniform sampler2D texture;
 varying vec4 position;
 varying vec3 normal;
 
-void main (void)
+void main ()
 {
   // テクスチャから画素の色を得る
   vec4 color = texture2DProj(texture, gl_TexCoord[0]);

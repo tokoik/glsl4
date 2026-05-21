@@ -7,7 +7,7 @@ uniform sampler2D texture;
 varying vec3 view;
 varying vec3 light;
 
-void main (void)
+void main ()
 {
   // 法線マップから法線ベクトル得る
   vec4 color = texture2DProj(texture, gl_TexCoord[0]);

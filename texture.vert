@@ -5,7 +5,7 @@
 varying vec4 position;
 varying vec3 normal;
 
-void main(void)
+void main()
 {
   // 頂点位置，法線ベクトル
   position = gl_ModelViewMatrix * gl_Vertex;
