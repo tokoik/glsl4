@@ -2,25 +2,37 @@
 
 // texture.frag
 
-uniform sampler2D texture;
-
-varying vec4 position;
+// ラスタライザから受け取る頂点の法線ベクトルの補間値
 varying vec3 normal;
+
+// ラスタライザから受け取る光線ベクトルの補間値
+varying vec3 light;
+
+// ラスタライザから受け取る中間ベクトルの補間値
+varying vec3 halfway;
+
+// テクスチャのサンプラ
+uniform sampler2D texture;
 
 void main ()
 {
+  // 法線ベクトル
+  vec3 fnormal = normalize(normal);
+
+  // 光線ベクトル
+  vec3 flight = normalize(light);
+
+  // 中間ベクトル
+  vec3 fhalfway = normalize(halfway);
+
+  // 拡散反射率
+  float diffuse = max(dot(fnormal, flight), 0.0);
+
+  // 鏡面反射率
+  float specular = pow(max(dot(fnormal, fhalfway), 0.0), gl_FrontMaterial.shininess);
+
   // テクスチャから画素の色を得る
   vec4 color = texture2DProj(texture, gl_TexCoord[0]);
-
-  // 法線ベクトル，光線ベクトル，視線ベクトル，中間ベクトル
-  vec3 fnormal = normalize(normal);
-  vec3 light = normalize((gl_LightSource[0].position * position.w - gl_LightSource[0].position.w * position).xyz);
-  vec3 view = -normalize(position.xyz);
-  vec3 halfway = normalize(light + view);
-
-  // 拡散反射率と鏡面反射率
-  float diffuse = max(dot(fnormal, light), 0.0);
-  float specular = pow(max(dot(fnormal, halfway), 0.0), gl_FrontMaterial.shininess);
 
   // フラグメントの色
   gl_FragColor = gl_LightSource[0].ambient * color

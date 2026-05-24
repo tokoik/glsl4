@@ -2,37 +2,51 @@
 
 // bump.vert
 
+// 頂点の接線ベクトル
 attribute vec3 tangent;
 
-varying vec3 light;
-varying vec3 view;
+// ラスタライザに送る接空間の光線ベクトル
+varying vec3 tlight;
+
+// ラスタライザに送る接空間の中間ベクトル
+varying vec3 thalfway;
 
 void main()
 {
-  // 頂点位置，光線ベクトル
+  // 頂点のクリッピング座標値
+  gl_Position = ftransform();
+
+  // 頂点のワールド座標値
   vec4 position = gl_ModelViewMatrix * gl_Vertex;
-  vec3 l = normalize((gl_LightSource[0].position * position.w - gl_LightSource[0].position.w * position).xyz);
+
+  // 法線ベクトル
+  vec3 normal = normalize(gl_NormalMatrix * gl_Normal);
+
+  // 光線ベクトル
+  vec3 light = normalize((gl_LightSource[0].position * position.w
+    - gl_LightSource[0].position.w * position).xyz);
+
+  // 視線ベクトル
+  vec3 view = -normalize(position.xyz);
+
+  // 中間ベクトル
+  vec3 halfway = normalize(light + view);
+
+  // テクスチャ座標
+  gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;
 
   // 法線ベクトルと接線ベクトルから接空間への変換行列
-  vec3 n = normalize(gl_NormalMatrix * gl_Normal);
+  vec3 n = normal;
   vec3 t = normalize(gl_NormalMatrix * tangent);
   vec3 b = cross(n, t);
 
-  vec3 temp;
-
   // 接空間における光線ベクトル
-  temp.x = dot(l, t);
-  temp.y = dot(l, b);
-  temp.z = dot(l, n);
-  light = normalize(temp);
+  tlight.x = dot(t, light);
+  tlight.y = dot(b, light);
+  tlight.z = dot(n, light);
 
-  // 接空間における視線ベクトル
-  temp.x = dot(position.xyz, t);
-  temp.y = dot(position.xyz, b);
-  temp.z = dot(position.xyz, n);
-  view = -normalize(temp);
-
-  // テクスチャ座標，頂点位置
-  gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;
-  gl_Position = ftransform();
+  // 接空間における中間ベクトル
+  thalfway.x = dot(t, halfway);
+  thalfway.y = dot(b, halfway);
+  thalfway.z = dot(n, halfway);
 }
