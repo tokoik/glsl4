@@ -5,8 +5,8 @@
 // ラスタライザから受け取る接空間の光線ベクトルの補間値
 varying vec3 tlight;
 
-// ラスタライザから受け取る接空間の中間ベクトルの補間値
-varying vec3 thalfway;
+// ラスタライザから受け取る接空間の視線ベクトルの補間値
+varying vec3 tview;
 
 // テクスチャのサンプラ
 uniform sampler2D texture;
@@ -21,7 +21,7 @@ void main ()
   vec3 flight = normalize(tlight);
 
   // 接空間における中間ベクトル
-  vec3 fhalfway = normalize(thalfway);
+  vec3 fhalfway = normalize(tlight + tview);
 
   // 拡散反射率
   float diffuse = max(dot(fnormal, flight), 0.0);

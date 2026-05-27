@@ -8,8 +8,8 @@ attribute vec3 tangent;
 // ラスタライザに送る接空間の光線ベクトル
 varying vec3 tlight;
 
-// ラスタライザに送る接空間の中間ベクトル
-varying vec3 thalfway;
+// ラスタライザに送る接空間の視線ベクトル
+varying vec3 tview;
 
 void main()
 {
@@ -29,9 +29,6 @@ void main()
   // 視線ベクトル
   vec3 view = -normalize(position.xyz);
 
-  // 中間ベクトル
-  vec3 halfway = normalize(light + view);
-
   // テクスチャ座標
   gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;
 
@@ -45,8 +42,8 @@ void main()
   tlight.y = dot(b, light);
   tlight.z = dot(n, light);
 
-  // 接空間における中間ベクトル
-  thalfway.x = dot(t, halfway);
-  thalfway.y = dot(b, halfway);
-  thalfway.z = dot(n, halfway);
+  // 接空間における視線ベクトル
+  tview.x = dot(t, view);
+  tview.y = dot(b, view);
+  tview.z = dot(n, view);
 }
