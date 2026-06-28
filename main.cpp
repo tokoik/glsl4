@@ -106,11 +106,11 @@ static void init()
     exit(1);
   }
 
-  /* テクスチャのサンプラの uniform 変数の場所を得る */
-  textureLoc = glGetUniformLocation(gl2Program, "texture");
-
   /* 接ベクトルを渡すために使う attribute 変数の場所を得る */
   tangentLoc = glGetAttribLocation(gl2Program, "tangent");
+
+  /* テクスチャのサンプラの uniform 変数の場所を得る */
+  textureLoc = glGetUniformLocation(gl2Program, "texture");
 
   /* テクスチャユニット０を指定する */
   glActiveTexture(GL_TEXTURE0);

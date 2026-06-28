@@ -20,11 +20,11 @@ void main ()
   // 接空間における光線ベクトル
   vec3 flight = normalize(tlight);
 
-  // 接空間における中間ベクトル
-  vec3 fhalfway = normalize(tlight + tview);
-
   // 拡散反射率
   float diffuse = max(dot(fnormal, flight), 0.0);
+
+  // 接空間における中間ベクトル
+  vec3 fhalfway = normalize(tlight + tview);
 
   // 鏡面反射率
   float specular = pow(max(dot(fnormal, fhalfway), 0.0), gl_FrontMaterial.shininess);
