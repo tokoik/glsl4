@@ -30,7 +30,7 @@ static const GLfloat lightamb[] = { 0.1f, 0.1f, 0.1f, 1.0f }; /* 環境光強度
 static GLuint gl2Program;
 
 /*
-** 接ベクトルを格納する attribute 変数の場所
+** 接線ベクトルを格納する attribute 変数の場所
 */
 static GLint tangentLoc;
 
@@ -106,7 +106,7 @@ static void init()
     exit(1);
   }
 
-  /* 接ベクトルを渡すために使う attribute 変数の場所を得る */
+  /* 接線ベクトルを渡すために使う attribute 変数の場所を得る */
   tangentLoc = glGetAttribLocation(gl2Program, "tangent");
 
   /* テクスチャのサンプラの uniform 変数の場所を得る */

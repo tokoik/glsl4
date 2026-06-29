@@ -7,13 +7,13 @@
 #include <math.h>
 
 /*
-** ローカル座標系から normal を法線ベクトルとする接ベクトル tangent を求める
+** ローカル座標系から normal を法線ベクトルとする接線ベクトル tangent を求める
 */
 static void setTangent(const double normal[3], double tangent[3])
 {
   double length = hypot(normal[0], normal[2]);
   
-  /* 接ベクトル = (0, 1, 0) × n */
+  /* 接線ベクトル = (0, 1, 0) × n */
   if (length > 0) {
     tangent[0] = normal[2] / length;
     tangent[1] = 0.0;
@@ -75,10 +75,10 @@ void sphere(double radius, int slices, int stacks, GLint tangentLoc)
       /* 法線ベクトルを設定する */
       glNormal3dv(normal[0]);
 
-      /* 接ベクトルを求める */
+      /* 接線ベクトルを求める */
       setTangent(normal[0], tangent);
 
-      /* 接ベクトルを attribute 変数に設定する */
+      /* 接線ベクトルを attribute 変数に設定する */
       glVertexAttrib3dv(tangentLoc, tangent);
 
       /* 頂点位置 */
@@ -90,10 +90,10 @@ void sphere(double radius, int slices, int stacks, GLint tangentLoc)
       /* 法線ベクトルを設定する */
       glNormal3dv(normal[1]);
 
-      /* 接ベクトルを求める */
+      /* 接線ベクトルを求める */
       setTangent(normal[1], tangent);
       
-      /* 接ベクトルを attribute 変数に設定する */
+      /* 接線ベクトルを attribute 変数に設定する */
       glVertexAttrib3dv(tangentLoc, tangent);
 
       /* 頂点位置 */
