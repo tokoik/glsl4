@@ -9,12 +9,12 @@ varying vec4 position;
 varying vec3 normal;
 
 // テクスチャのサンプラ
-uniform sampler2D texture;
+uniform sampler2D color;
 
 void main ()
 {
   // 法線マップのテクスチャをサンプリングする
-  vec4 color = texture2DProj(texture, gl_TexCoord[0]);
+  vec4 fcolor = texture2DProj(color, gl_TexCoord[0]);
 
   // 視点座標系の法線ベクトル
   vec3 fnormal = normalize(normal);
@@ -36,7 +36,7 @@ void main ()
   float specular = pow(max(dot(fnormal, halfway), 0.0), gl_FrontMaterial.shininess);
 
   // フラグメントの色
-  gl_FragColor = gl_LightSource[0].ambient * color
-               + gl_LightSource[0].diffuse * diffuse * color
+  gl_FragColor = gl_LightSource[0].ambient * fcolor
+               + gl_LightSource[0].diffuse * diffuse * fcolor
                + gl_FrontLightProduct[0].specular * specular;
 }

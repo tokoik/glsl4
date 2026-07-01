@@ -9,13 +9,13 @@ varying vec3 tlight;
 varying vec3 tview;
 
 // テクスチャのサンプラ
-uniform sampler2D texture;
+uniform sampler2D color;
 
 void main ()
 {
   // 法線マップから接空間の法線ベクトル得る
-  vec4 color = texture2DProj(texture, gl_TexCoord[0]);
-  vec3 fnormal = color.rgb * 2.0 - 1.0;
+  vec4 fcolor = texture2DProj(color, gl_TexCoord[0]);
+  vec3 fnormal = fcolor.rgb * 2.0 - 1.0;
 
   // 接空間における光線ベクトル
   vec3 flight = normalize(tlight);

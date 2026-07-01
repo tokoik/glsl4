@@ -37,7 +37,7 @@ static GLint tangentLoc;
 /*
 ** テクスチャのサンプラの uniform 変数の場所
 */
-static GLuint textureLoc;
+static GLuint colorLoc;
 
 /*
 ** テクスチャ
@@ -110,7 +110,7 @@ static void init()
   tangentLoc = glGetAttribLocation(gl2Program, "tangent");
 
   /* テクスチャのサンプラの uniform 変数の場所を得る */
-  textureLoc = glGetUniformLocation(gl2Program, "texture");
+  colorLoc = glGetUniformLocation(gl2Program, "color");
 
   /* テクスチャユニット０を指定する */
   glActiveTexture(GL_TEXTURE0);
@@ -188,7 +188,7 @@ static void display()
   glUseProgram(gl2Program);
 
   /* テクスチャのサンプラにテクスチャユニット０を指定する */
-  glUniform1i(textureLoc, 0);
+  glUniform1i(colorLoc, 0);
 
   /* モデルビュー変換行列の設定 */
   glMatrixMode(GL_MODELVIEW);

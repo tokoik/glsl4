@@ -102,8 +102,8 @@
 
 1. **シェーダプログラムの読み込みと変数の取得 (`init()` 関数)**
    - bump.vert（バーテックスシェーダ）と bump.frag（フラグメントシェーダ）を読み込みます。
-   - `glGetAttribLocation(` `gl2Program` `,` `"tangent"` `)` を用いて、頂点の接線ベクトルを渡すための attribute 変数の場所（`tangentLoc`）を取得します。
-   - `glGetUniformLocation(` `gl2Program` `,` `"texture"` `)` で、法線マップのサンプラを渡す uniform 変数の場所（`textureLoc`）を取得します。
+   - `glGetAttribLocation(` `gl2Program` `,` `"tangent"` `)` を用いて、頂点の接線ベクトルを渡すための attribute 変数の場所を `tangentLoc` に取得します。
+   - `glGetUniformLocation(` `gl2Program` `,` `"color"` `)` で、法線マップのサンプラを渡す uniform 変数の場所を `colorLoc` に取得します。
    - 高さマップ画像 dotbump.raw から `makeNormalMap()` 関数を用いて法線マップを生成し、テクスチャとして割り当てます。
 
 2. **接線ベクトルの算出と設定 (sphere.cpp)**
